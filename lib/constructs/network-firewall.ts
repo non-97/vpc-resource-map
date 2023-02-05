@@ -101,7 +101,7 @@ export class NetworkFirewall extends Construct {
       const az = subnet.availabilityZone;
 
       const targetSubnets = props.vpc.selectSubnets({
-        subnetType: cdk.aws_ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        subnetGroupName: "Egress",
         availabilityZones: [az],
       }).subnets;
 
