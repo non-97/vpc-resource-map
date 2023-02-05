@@ -24,14 +24,12 @@ export class Vgw extends Construct {
     });
 
     // Route to VGW
-    props.vpc
-      .selectSubnets({ subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED })
-      .subnets.forEach((subnet, index) => {
-        new cdk.aws_ec2.CfnRoute(this, `Route Tp Vgw ${index}`, {
-          routeTableId: subnet.routeTable.routeTableId,
-          destinationCidrBlock: "172.16.0.0/12",
-          gatewayId: vgw.ref,
-        });
+    props.vpc.publicSubnets.forEach((subnet, index) => {
+      new cdk.aws_ec2.CfnRoute(this, `Route Tp Vgw ${index}`, {
+        routeTableId: subnet.routeTable.routeTableId,
+        destinationCidrBlock: "172.16.0.0/12",
+        gatewayId: vgw.ref,
       });
+    });
   }
 }
